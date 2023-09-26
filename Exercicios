@@ -1,0 +1,27 @@
+import random
+
+
+def arquivador(listaN, listaSN, nomeArquivo):
+    arquivoNomes = open(nomeArquivo, 'w')
+    for i in range(0, 20):
+        altura = round(random.SystemRandom().uniform(1, 2), 2)
+        arquivoNomes.write(str(listaN[random.randint(0, 19)]))
+        arquivoNomes.write(" ")
+        arquivoNomes.write(str(listaSN[random.randint(0, 19)]))
+        arquivoNomes.write(" ")
+        arquivoNomes.write("Idade: ")
+        arquivoNomes.write(str(random.randint(1, 50)))
+        arquivoNomes.write(" ")
+        arquivoNomes.write("Altura: ")
+        arquivoNomes.write(str(altura))
+        arquivoNomes.write("\n")
+    arquivoNomes.close()
+
+listaN = ['Luis', 'Paulo', 'Ramon', 'Giovani', 'Felipe', 'Cristiano', 'Sionara', 'Sonic', 'Garibaldo',
+          'Gefersson', 'Diego', 'Rodrigo', 'Fernando', 'Junior', 'Rodolfo', 'Cleber', 'Bruno', 'Katarine',
+          'Charlie', 'Dwayne']
+
+listaSN= ['Henrique', 'Kalizak', 'Fonseca', 'Miler', 'Silva', 'Santos', 'Pereira', 'Dinamarco', 'Figueiredo',
+          'Rocha', 'Galvao', 'Ret', 'Araujo', 'York', 'Castro', 'Gois', 'De Morais', 'Filho', 'Brown', 'Johson']
+
+arquivador(listaN, listaSN, 'listaDeNomes.txt')
