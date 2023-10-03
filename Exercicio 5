@@ -1,0 +1,72 @@
+import random
+
+
+def geraNomes(listaN, nomeArquivo):
+    arquivoNomes = open(nomeArquivo, 'w')
+
+    nomes_selecionados = random.sample(listaN, 19)
+    
+    nomes_selecionados.append("Luis")
+    
+    for nome in nomes_selecionados:
+        arquivoNomes.write(str(nome))
+        arquivoNomes.write(" ")
+        arquivoNomes.write("\n")
+    arquivoNomes.close()
+
+def geraNotas(nomeArquivo):
+    arquivoNotas = open(nomeArquivo, 'w')
+
+    for _ in range(19):
+        notas = [str(random.randint(0, 10)) for _ in range(3)]
+        arquivoNotas.write(" ".join(notas))
+        arquivoNotas.write("\n")
+    
+    arquivoNotas.write("7 7 7\n")
+
+    arquivoNotas.close()
+
+def geraNomesComNotas(arquivoNomes, arquivoNotas, arquivoNM):
+    with open(arquivoNomes, "r") as f1, open(arquivoNotas, "r") as f2, open(arquivoNM, 'w') as f3:
+        nomes = f1.readlines()
+        notas = f2.readlines()
+        
+        for nome, notas_aluno in zip(nomes, notas):
+            notas_aluno = notas_aluno.split() 
+            notas_aluno = [float(nota) for nota in notas_aluno]  
+            media = sum(notas_aluno) / len(notas_aluno)  
+            f3.write(f'{nome.strip()}: {media:.2f}\n')
+            f3.write("\n")
+
+    f1.close()
+    f2.close()
+    f3.close()
+
+def alterarNota(arquivoNomes, arquivoNotas, nomeAluno, notaVelha, novaNota):
+    with open(arquivoNomes, "r") as f1, open(arquivoNotas, "r") as f2:
+        nomes = f1.readlines()
+        notas = f2.readlines()
+
+    for i in range(len(nomes)):
+        nome = nomes[i].strip()
+        notas_aluno = notas[i].strip().split()
+        
+        if nome == nomeAluno:
+            for j in range(len(notas_aluno)):
+                if float(notas_aluno[j]) == notaVelha:
+                    notas_aluno[j] = str(novaNota)
+            
+            notas[i] = " ".join(notas_aluno) + "\n"
+
+    with open(arquivoNotas, "w") as f2:
+        f2.writelines(notas)
+
+
+listaN = ['Paulo', 'Ramon', 'Giovani', 'Felipe', 'Cristiano', 'Sionara', 'Sonic', 'Garibaldo',
+          'Gefersson', 'Diego', 'Rodrigo', 'Fernando', 'Junior', 'Rodolfo', 'Cleber', 'Bruno', 'Katarine',
+          'Charlie', 'Dwayne']
+
+geraNomes(listaN, 'nomes.txt')
+geraNotas("notas.txt")
+geraNomesComNotas("nomes.txt", "notas.txt", "notasEnomes.txt")
+alterarNota("nomes.txt", "notas.txt", "Luis", 7.0, 8.5)
